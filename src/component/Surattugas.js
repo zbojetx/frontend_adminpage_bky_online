@@ -22,6 +22,7 @@ import { ComponentToPrintKwitansi } from './print/Printkwintansi';
 import ReactQuill, { Quill } from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import renderHTML from 'react-render-html';
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import moment from 'moment';
 moment.locale('id')
 
@@ -103,6 +104,7 @@ function Sppd() {
     moment.locale('id')
     const [form] = Form.useForm();
     const [modal, setModal] = useState(false)
+    const [modalExport, setModalExport] = useState(false)
     const [modalPrintSt, setModalPrintSt] = useState(false)
     const [modalPrintKwitansi, setModalPrintKwitansi] = useState(false)
     const [modalPelaksana, setModalPelaksana] = useState(false)
@@ -159,6 +161,10 @@ function Sppd() {
 
     const modalTrigger = () => {
         setModal(!modal)
+    }
+
+    const modalExportTrigger = () => {
+        setModalExport(!modalExport)
     }
 
     const modalTriggerPelaksana = (id) => {
@@ -234,6 +240,8 @@ function Sppd() {
                 nomor_surat: surattugas[i].nomor_surat,
                 tgl_berangkat: surattugas[i].tanggal_berangkat,
                 tgl_pulang: surattugas[i].tanggal_pulang,
+                tempat: surattugas[i].tempat,
+                dasar: surattugas[i].dasar,
             })
         }
         setListSuratTugas(data)
@@ -284,9 +292,6 @@ function Sppd() {
         }
     }
 
-    const cariberdasarkantanngal = async () => {
-
-    }
 
     const create = async (req, res) => {
         if (nomor_surat === '') {
@@ -488,6 +493,8 @@ function Sppd() {
                 nomor_surat: surattugas[i].nomor_surat,
                 tgl_berangkat: surattugas[i].tanggal_berangkat,
                 tgl_pulang: surattugas[i].tanggal_pulang,
+                tempat: surattugas[i].tempat,
+                dasar: surattugas[i].dasar,
             })
         }
         setListSuratTugas(data)
@@ -515,6 +522,8 @@ function Sppd() {
                 nomor_surat: surattugas[i].nomor_surat,
                 tgl_berangkat: surattugas[i].tanggal_berangkat,
                 tgl_pulang: surattugas[i].tanggal_pulang,
+                tempat: surattugas[i].tempat,
+                dasar: surattugas[i].dasar,
             })
         }
         setListSuratTugas(data)
@@ -684,7 +693,7 @@ function Sppd() {
             <Card
                 title="Surat Tugas"
                 //extra={<Button type="dashed" onClick={() => browserHistory.push('/addpegawai')}>Tambah Pegawai </Button>}
-                extra={<Button type="dashed" onClick={createnew}>Buat Surat Tugas </Button>}
+                extra={<Row><Col style={{ paddingRight: 10 }}><Button type="dashed" onClick={createnew}>Buat Surat Tugas </Button></Col><Col> <Button type="dashed" onClick={modalExportTrigger}>Export to excel</Button></Col></Row>}
                 style={{ width: '100%', marginBottom: 20 }}
                 headStyle={{ color: 'white', backgroundColor: '#0984e3', fontWeight: 'bold', fontSize: 20 }}
             >
@@ -942,6 +951,46 @@ function Sppd() {
                 <Table columns={columnsPelaksana} dataSource={listPelaksana} />
             </Modal>
 
+
+            <Modal
+                title="Export Excel"
+                centered
+                visible={modalExport}
+                //onOk={createorupdate}
+                onCancel={modalExportTrigger}
+                width={1000}
+                footer={null}
+            >
+                <table style={{ width: '100%', marginBottom: 20 }} border={1} id="table-to-xls">
+                    <tr>
+                        <th>No</th>
+                        <th>Tanggal</th>
+                        <th>Nomor Surat</th>
+                        <th>Maksud</th>
+                        <th>Dasar</th>
+                        <th>Tempat</th>
+                    </tr>
+                    {listSuratTugas.map((data, index) =>
+                        <tr>
+                            <td>{data.no}</td>
+                            <td>{data.nomor_surat}/{data.format_nomor}</td>
+                            <td>{moment(data.tgl_berangkat).format('LL')} -  {moment(data.tgl_pulang).format('LL')}</td>
+                            <td>{renderHTML(data.maksud)}</td>
+                            <td>{renderHTML(data.dasar)}</td>
+                            <td>{data.tempat}</td>
+                        </tr>
+                    )}
+                </table>
+
+                <ReactHTMLTableToExcel
+                    id="test-table-xls-button"
+                    className="download-table-xls-button"
+                    table="table-to-xls"
+                    filename="tablexls"
+                    sheet="tablexls"
+                    buttonText="Download as XLS"
+                />
+            </Modal>
         </Content>
     )
 }

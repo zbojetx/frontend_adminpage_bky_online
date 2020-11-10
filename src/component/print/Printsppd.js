@@ -16,6 +16,7 @@ import { Link, browserHistory } from 'react-router';
 //import { isLogin } from '../reducer/LocalStoradge';
 import ReactToPrint from 'react-to-print';
 import styled from 'styled-components';
+import renderHTML from 'react-render-html';
 import moment from 'moment';
 import 'moment/locale/id';
 moment.locale('id')
@@ -160,12 +161,12 @@ export class ComponentToPrint extends React.Component {
                         <tr style={{ border: '4px solid black', borderWidth: 1, borderColor: 'black', marginTop: 1 }} >
                             <td style={{ width: '3%', border: '1px solid black', borderWidth: 1, borderColor: 'black', textAlign: 'center' }}>4</td>
                             <td style={{ width: '40%', padding: 8, border: '1px solid black', borderWidth: 1, borderColor: 'black' }}>Maksud Perjalanan Dinas</td>
-                            <td style={{ width: '57%', padding: 8, border: '1px solid black', borderWidth: 1, borderColor: 'black' }}>{listSppd.maksud}</td>
+                            <td style={{ width: '57%', padding: 8, border: '1px solid black', borderWidth: 1, borderColor: 'black' }}>{renderHTML(listSppd.maksud || '')}</td>
                         </tr>
                         <tr style={{ border: '4px solid black', borderWidth: 1, borderColor: 'black', marginTop: 1 }} >
                             <td style={{ width: '3%', border: '1px solid black', borderWidth: 1, borderColor: 'black', textAlign: 'center' }}>5</td>
                             <td style={{ width: '40%', padding: 8, border: '1px solid black', borderWidth: 1, borderColor: 'black' }}>Dasar Perjalanan Dinas</td>
-                            <td style={{ width: '57%', padding: 8, border: '1px solid black', borderWidth: 1, borderColor: 'black' }}>{listSppd.dasar}</td>
+                            <td style={{ width: '57%', padding: 8, border: '1px solid black', borderWidth: 1, borderColor: 'black' }}>{renderHTML(listSppd.dasar || '')}</td>
                         </tr>
                         <tr style={{ border: '4px solid black', borderWidth: 1, borderColor: 'black', marginTop: 1 }} >
                             <td style={{ width: '3%', border: '1px solid black', borderWidth: 1, borderColor: 'black', textAlign: 'center' }}>6</td>

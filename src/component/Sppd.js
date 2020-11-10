@@ -19,6 +19,8 @@ import ReactToPrint from 'react-to-print';
 import styled from 'styled-components';
 import { ComponentToPrint } from './print/Printsppd'
 import { ComponentToPrintKwitansi } from './print/Printkwintansi'
+import ReactQuill, { Quill } from 'react-quill';
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import moment from 'moment';
 moment.locale('id')
 
@@ -100,6 +102,7 @@ function Sppd() {
     moment.locale('id')
     const [form] = Form.useForm();
     const [modal, setModal] = useState(false)
+    const [modalExport, setModalExport] = useState(false)
     const [modalPrintSppd, setModalPrintSppd] = useState(false)
     const [modalPrintKwitansi, setModalPrintKwitansi] = useState(false)
     const [modalPengikut, setModalPengikut] = useState(false)
@@ -141,6 +144,8 @@ function Sppd() {
     const [nomor_surat_tugas, setNomorSuratTugas] = useState('')
     const [format_surat_tugas, setFormatSuratTugas] = useState('')
 
+    const [theme, setTheme] = useState('snow')
+
     const componentRef = useRef();
 
 
@@ -156,6 +161,11 @@ function Sppd() {
     const modalTrigger = () => {
         setModal(!modal)
     }
+
+    const modalExportTrigger = () => {
+        setModalExport(!modalExport)
+    }
+
 
     const modalTriggerPengikut = (id) => {
         setId(id)
@@ -247,6 +257,8 @@ function Sppd() {
                 nama_pegawai: sppd[i].nama_pegawai,
                 prov: sppd[i].provinsi,
                 kabkota: sppd[i].kab_kota,
+                dasar: sppd[i].dasar,
+                maksud: sppd[i].maksud,
                 nomor_surat_tugas: sppd[i].nomor_surat_tugas,
                 format_surat_tugas: sppd[i].format_surat_tugas,
                 nomor_surat: sppd[i].nomor_surat,
@@ -500,6 +512,8 @@ function Sppd() {
                 format_surat_tugas: sppd[i].format_surat_tugas,
                 nomor_surat: sppd[i].nomor_surat,
                 format_surat: sppd[i].format_surat,
+                dasar: sppd[i].dasar,
+                maksud: sppd[i].maksud,
                 peraturan: sppd[i].peraturan_perjalanan,
                 tgl_berangkat: sppd[i].tanggal_berangkat,
                 tgl_pulang: sppd[i].tanggal_pulang,
@@ -533,6 +547,8 @@ function Sppd() {
                 format_surat_tugas: sppd[i].format_surat_tugas,
                 nomor_surat: sppd[i].nomor_surat,
                 format_surat: sppd[i].format_surat,
+                dasar: sppd[i].dasar,
+                maksud: sppd[i].maksud,
                 peraturan: sppd[i].peraturan_perjalanan,
                 tgl_berangkat: sppd[i].tanggal_berangkat,
                 tgl_pulang: sppd[i].tanggal_pulang,
@@ -566,6 +582,8 @@ function Sppd() {
                 format_surat_tugas: sppd[i].format_surat_tugas,
                 nomor_surat: sppd[i].nomor_surat,
                 format_surat: sppd[i].format_surat,
+                dasar: sppd[i].dasar,
+                maksud: sppd[i].maksud,
                 peraturan: sppd[i].peraturan_perjalanan,
                 tgl_berangkat: sppd[i].tanggal_berangkat,
                 tgl_pulang: sppd[i].tanggal_pulang,
@@ -733,6 +751,14 @@ function Sppd() {
         setFormatSuratTugas(value)
     }
 
+    const onChangeDasar = value => {
+        setDasar(value)
+    }
+
+    const onChangeMaksud = value => {
+        setMaksud(value)
+    }
+
     const dateFormat = 'YYYY-MM-DD';
     return (
         <Content
@@ -747,7 +773,7 @@ function Sppd() {
             <Card
                 title="Surat Perintah Perjalanan Dinas (SPPD)"
                 //extra={<Button type="dashed" onClick={() => browserHistory.push('/addpegawai')}>Tambah Pegawai </Button>}
-                extra={<Button type="dashed" onClick={createnew}>Buat SPPD </Button>}
+                extra={<Row><Col style={{ paddingRight: 10 }}><Button type="dashed" onClick={createnew}>Buat SPPD </Button></Col><Col> <Button type="dashed" onClick={modalExportTrigger}>Export to excel</Button></Col></Row>}
                 style={{ width: '100%', marginBottom: 20  }}
                 headStyle={{ color: 'white', backgroundColor: '#0984e3', fontWeight: 'bold', fontSize: 20 }}
             >
@@ -937,12 +963,28 @@ function Sppd() {
                     <Inputx placeholder="Kode Anggaran" value={kode_anggaran} onChange={e => setKodeAnggaran(e.target.value)} />
                 </InputBoxCenter>
                 <InputBoxCenter>
-                    <Label>Maksud Perjalanan Dinas</Label>
-                    <TextArea rows={3} value={maksud} onChange={e => setMaksud(e.target.value)} />
+                    <Label>Dasar Perjalanan Dinas</Label>
+                    <ReactQuill
+                        theme={theme}
+                        onChange={onChangeDasar}
+                        value={dasar || ''}
+                        modules={Sppd.modules}
+                        formats={Sppd.formats}
+                        bounds={'.app'}
+                        placeholder="Dasar"
+                    />
                 </InputBoxCenter>
                 <InputBoxCenter>
-                    <Label>Dasar Perjalanan Dinas</Label>
-                    <TextArea rows={3} value={dasar} onChange={e => setDasar(e.target.value)} />
+                    <Label>Maksud Perjalanan Dinas</Label>
+                    <ReactQuill
+                        theme={theme}
+                        onChange={onChangeMaksud}
+                        value={maksud || ''}
+                        modules={Sppd.modules}
+                        formats={Sppd.formats}
+                        bounds={'.app'}
+                        placeholder="Maksud"
+                    />
                 </InputBoxCenter>
                 <InputBoxCenter>
                     <Label>Waktu</Label>
@@ -1094,9 +1136,75 @@ function Sppd() {
                 <Table columns={columnsPengikut} dataSource={listPengikut} />
             </Modal>
 
+            <Modal
+                title="Export Excel"
+                centered
+                visible={modalExport}
+                //onOk={createorupdate}
+                onCancel={modalExportTrigger}
+                width={1000}
+                footer={null}
+            >
+                <table style={{ width: '100%', marginBottom: 20 }} border={1} id="table-to-xls">
+                    <tr>
+                        <th>No</th>
+                        <th>Nama Pegawai</th>
+                        <th>Tanggal</th>
+                        <th>Nomor SPD</th>
+                        <th>Nomor Surat Tugas</th>
+                        <th>Peraturan Perjalanan</th>
+                    </tr>
+                    {listSppd.map((data, index) =>
+                        <tr>
+                            <td>{data.no}</td>
+                            <td>{data.nama_pegawai}</td>
+                            <td>{moment(data.tgl_berangkat).format('LL')} -  {moment(data.tgl_pulang).format('LL')}</td>
+                            <td>{data.nomor_surat}/{data.format_surat}</td>
+                            <td>{data.nomor_surat_tugas}/{data.format_surat_tugas}</td>
+                            <td>{data.peraturan}</td>
+                        </tr>
+                    )}
+                </table>
+
+                <ReactHTMLTableToExcel
+                    id="test-table-xls-button"
+                    className="download-table-xls-button"
+                    table="table-to-xls"
+                    filename="tablexls"
+                    sheet="tablexls"
+                    buttonText="Download as XLS"
+                />
+            </Modal>
+
         </Content>
     )
 }
+
+Sppd.modules = {
+    toolbar: [
+        [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+        [{ size: [] }],
+        ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+        [{ 'list': 'ordered' }, { 'list': 'bullet' },
+        { 'indent': '-1' }, { 'indent': '+1' }],
+        ['link', 'image', 'video'],
+        ['clean']
+    ],
+    clipboard: {
+        // toggle to add extra line breaks when pasting HTML:
+        matchVisual: false,
+    }
+}
+/*
+ * Quill editor formats
+ * See https://quilljs.com/docs/formats/
+ */
+Sppd.formats = [
+    'header', 'font', 'size',
+    'bold', 'italic', 'underline', 'strike', 'blockquote',
+    'list', 'bullet', 'indent',
+    'link', 'image', 'video'
+]
 
 export default Sppd;
 

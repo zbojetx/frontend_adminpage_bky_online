@@ -65,7 +65,7 @@ export class ComponentToPrint extends React.Component {
             instansi: sppdbyid.instansi[0],
             pelaksana: sppdbyid.pelaksana,
         })
-        console.log(sppdbyid)
+        console.log(this.state.penandatangan)
         await this.getLama()
         // setListPegawai(sppdbyid.pegawai[0])
         // setlistSt(sppdbyid.sppd[0])
@@ -75,6 +75,10 @@ export class ComponentToPrint extends React.Component {
         // setInstansi(sppdbyid.instansi[0])
         // setPengikut(sppdbyid.pengikut)
     }
+
+    // async getPenandatangan() {
+
+    // }
 
     async getLama() {
         const { listSt } = this.state
@@ -199,8 +203,8 @@ render() {
                     <td style={{ width: '50%', padding: 20 }}></td>
                     <td style={{ width: '50%', padding: 20 }}>
                         {instansi.kota}, {moment(listSt.tanggaldikeluarkan).format('LL')}<br />
-                        {() => {
-                            if (penandatangan === null || undefined) {
+                        {(() => {
+                            if (penandatangan ===  undefined || null || "") {
                                 return <></>
                             } else {
                                 return (<>
@@ -214,7 +218,7 @@ render() {
                                 </>
                                 )
                             }
-                        }}
+                        })()}
                     </td>
                 </tr>
             </table>

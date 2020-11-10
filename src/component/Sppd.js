@@ -11,7 +11,7 @@ import {
     UserAddOutlined
 } from '@ant-design/icons';
 import 'antd/dist/antd.css';
-import { createupdate, getall, remove, getbyid } from '../api/api';
+import { createupdate, getall, remove, getbyid, getallpost } from '../api/api';
 import { Typography } from 'antd';
 import { Link, browserHistory } from 'react-router';
 import { isLogin } from '../reducer/LocalStoradge';
@@ -134,6 +134,12 @@ function Sppd() {
     const [listKabKota, setListKabKota] = useState([])
     const [listPengikut, setListPengikut] = useState([])
     const [listFormatSurat, setListFormatSurat] = useState([])
+
+    const [tanggalCari1, setTanggalCari1] = useState('')
+    const [tanggalCari2, setTanggalCari2] = useState('')
+
+    const [nomor_surat_tugas, setNomorSuratTugas] = useState('')
+    const [format_surat_tugas, setFormatSuratTugas] = useState('')
 
     const componentRef = useRef();
 
@@ -468,6 +474,107 @@ function Sppd() {
         setTanggalDikeluarkan(Date.now())
     }
 
+    const caribyTanggal = async () => {
+        const data = []
+        const date1 = tanggalCari1;
+        const date2 = tanggalCari2;
+        let datas = {
+            date1,
+            date2
+        }
+        const apiurl = 'sppdbydate'
+        console.log(apiurl)
+        let sppd = await getallpost(datas, apiurl)
+        let data_length = sppd.length
+
+        console.log(sppd)
+
+        for (let i = 0; i < data_length; i++) {
+            data.push({
+                no: i + 1,
+                id: sppd[i].id,
+                nama_pegawai: sppd[i].nama_pegawai,
+                prov: sppd[i].provinsi,
+                kabkota: sppd[i].kab_kota,
+                nomor_surat_tugas: sppd[i].nomor_surat_tugas,
+                format_surat_tugas: sppd[i].format_surat_tugas,
+                nomor_surat: sppd[i].nomor_surat,
+                format_surat: sppd[i].format_surat,
+                peraturan: sppd[i].peraturan_perjalanan,
+                tgl_berangkat: sppd[i].tanggal_berangkat,
+                tgl_pulang: sppd[i].tanggal_pulang,
+            })
+        }
+        setListSppd(data)
+
+    }
+
+    const caribySurat = async () => {
+        const data = []
+        let datas = {
+            nomor_surat,
+            format_surat
+        }
+        const apiurl = 'sppdbynomor'
+        console.log(apiurl)
+        let sppd = await getallpost(datas, apiurl)
+        let data_length = sppd.length
+
+        console.log(sppd)
+
+        for (let i = 0; i < data_length; i++) {
+            data.push({
+                no: i + 1,
+                id: sppd[i].id,
+                nama_pegawai: sppd[i].nama_pegawai,
+                prov: sppd[i].provinsi,
+                kabkota: sppd[i].kab_kota,
+                nomor_surat_tugas: sppd[i].nomor_surat_tugas,
+                format_surat_tugas: sppd[i].format_surat_tugas,
+                nomor_surat: sppd[i].nomor_surat,
+                format_surat: sppd[i].format_surat,
+                peraturan: sppd[i].peraturan_perjalanan,
+                tgl_berangkat: sppd[i].tanggal_berangkat,
+                tgl_pulang: sppd[i].tanggal_pulang,
+            })
+        }
+        setListSppd(data)
+        //setListSuratTugas(data)
+    }
+
+    const caribySuratTugas = async () => {
+        const data = []
+        let datas = {
+            nomor_surat_tugas,
+            format_surat_tugas
+        }
+        const apiurl = 'sppdbynomor'
+        console.log(apiurl)
+        let sppd = await getallpost(datas, apiurl)
+        let data_length = sppd.length
+
+        console.log(sppd)
+
+        for (let i = 0; i < data_length; i++) {
+            data.push({
+                no: i + 1,
+                id: sppd[i].id,
+                nama_pegawai: sppd[i].nama_pegawai,
+                prov: sppd[i].provinsi,
+                kabkota: sppd[i].kab_kota,
+                nomor_surat_tugas: sppd[i].nomor_surat_tugas,
+                format_surat_tugas: sppd[i].format_surat_tugas,
+                nomor_surat: sppd[i].nomor_surat,
+                format_surat: sppd[i].format_surat,
+                peraturan: sppd[i].peraturan_perjalanan,
+                tgl_berangkat: sppd[i].tanggal_berangkat,
+                tgl_pulang: sppd[i].tanggal_pulang,
+            })
+        }
+        setListSppd(data)
+        //setListSuratTugas(data)
+    }
+
     const columnsPengikut = [
         {
             title: 'No',
@@ -616,14 +723,24 @@ function Sppd() {
         setFormatSurat(value)
     }
 
+    const onChangeDateCari = (value, string) => {
+        console.log(string)
+        setTanggalCari1(string[0])
+        setTanggalCari2(string[1])
+    }
+
+    const onChangeFormatSuratTugas = value => {
+        setFormatSuratTugas(value)
+    }
+
     const dateFormat = 'YYYY-MM-DD';
     return (
         <Content
-            className="site-layout-background"
+            //className="site-layout-background"
             style={{
                 margin: '24px 16px',
                 padding: 24,
-                minHeight: 280,
+                minHeight: '100%',
             }}
         >
 
@@ -631,10 +748,81 @@ function Sppd() {
                 title="Surat Perintah Perjalanan Dinas (SPPD)"
                 //extra={<Button type="dashed" onClick={() => browserHistory.push('/addpegawai')}>Tambah Pegawai </Button>}
                 extra={<Button type="dashed" onClick={createnew}>Buat SPPD </Button>}
-                style={{ width: '100%', borderWidth: 0 }}
+                style={{ width: '100%', marginBottom: 20  }}
                 headStyle={{ color: 'white', backgroundColor: '#0984e3', fontWeight: 'bold', fontSize: 20 }}
-            />
+            >
+                <Row>
+                    <Col xs={12} sm={12} md={12} lg={8} xl={8} style={{ padding: 10 }}>
+                        <div style={{ borderWidth: 1, borderColor: '#535c68', border: '1px solid #b2bec3', padding: 10, borderRadius: 5 }}>
+                            <Label>Cari berdasarkan tanggal</Label>
+                            <RangePicker
+                                style={{ width: '100%', borderWidth: 0, marginBottom: 20 }}
+                                onChange={onChangeDateCari}
+                            />
+                            <Button block primary onClick={caribyTanggal}>Cari</Button>
+                        </div>
+                    </Col>
+                    <Col xs={12} sm={12} md={12} lg={8} xl={8} style={{ padding: 10 }}>
+                        <div style={{ borderWidth: 1, borderColor: '#535c68', border: '1px solid #b2bec3', padding: 10, borderRadius: 5, width: '100%' }}>
+                            <Row style={{ width: "100%", marginBottom: 20 }}>
+                                <Col xs={24} sm={24} md={24} lg={12} xl={12}>
+                                    <Label>Nomor Surat</Label>
+                                    <Inputx placeholder="Nomor Surat" value={nomor_surat} onChange={e => setNomorSurat(e.target.value)} />
+                                </Col>
+                                <Col xs={24} sm={24} md={24} lg={12} xl={12}>
+                                    <Label>Penomoran</Label>
+                                    <Select
+                                        showSearch
+                                        style={{ width: '100%' }}
+                                        placeholder="Pilih Format Surat"
+                                        optionFilterProp="children"
+                                        onChange={onChangeFormatSurat}
+                                        //value={format_surat}
+                                    >
+                                        {listFormatSurat.map((data, index) =>
+                                            <Option value={data.nama_attr}>{data.nama_attr}</Option>
+                                        )}
+                                    </Select>
+                                </Col>
+                            </Row>
+                            <Button block primary onClick={caribySurat}>Cari</Button>
+                        </div>
+                    </Col>
+                    <Col xs={12} sm={12} md={12} lg={8} xl={8} style={{ padding: 10 }}>
+                        <div style={{ borderWidth: 1, borderColor: '#535c68', border: '1px solid #b2bec3', padding: 10, borderRadius: 5, width: '100%' }}>
+                            <Row style={{ width: "100%", marginBottom: 20 }}>
+                                <Col xs={24} sm={24} md={24} lg={12} xl={12}>
+                                    <Label>Nomor Surat Tugas</Label>
+                                    <Inputx placeholder="Nomor Surat" value={nomor_surat_tugas} onChange={e => setNomorSuratTugas(e.target.value)} />
+                                </Col>
+                                <Col xs={24} sm={24} md={24} lg={12} xl={12}>
+                                    <Label>Penomoran Surat Tugas</Label>
+                                    <Select
+                                        showSearch
+                                        style={{ width: '100%' }}
+                                        placeholder="Pilih Format Surat"
+                                        optionFilterProp="children"
+                                        onChange={onChangeFormatSuratTugas}
+                                        //value={format_surat}
+                                    >
+                                        {listFormatSurat.map((data, index) =>
+                                            <Option value={data.nama_attr}>{data.nama_attr}</Option>
+                                        )}
+                                    </Select>
+                                </Col>
+                            </Row>
+                            <Button block primary onClick={caribySuratTugas}>Cari</Button>
+                        </div>
+                    </Col>
+                    {/* <Col xs={12} sm={12} md={12} lg={8} xl={8} style={{ padding: 10 }}>
+                        <div style={{ borderWidth: 1, borderColor: '#535c68', border: '1px solid #b2bec3', padding: 10, borderRadius: 5 }}>
+                            <Label>Rekap Laporan</Label>
 
+                            <Button block primary >Rekap Tahunan xls</Button>
+                        </div>
+                    </Col> */}
+                </Row>
+            </Card>
             <Table columns={columns} dataSource={listSppd} />
 
             <Modal

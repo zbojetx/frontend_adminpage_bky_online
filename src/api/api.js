@@ -1,8 +1,8 @@
 import React from 'react'
 import axios from 'axios'
 
-const endpoint = 'http://api-prod.e-superdina.com'
-//const endpoint = 'http://localhost:6789'
+//const endpoint = 'http://api-prod.e-superdina.com'
+const endpoint = 'http://localhost:6789'
 
 
 // Reusable Function ======================================================

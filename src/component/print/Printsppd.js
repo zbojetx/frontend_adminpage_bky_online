@@ -33,6 +33,7 @@ export class ComponentToPrint extends React.Component {
             provinsi: [],
             instansi: [],
             pengikut: [],
+            lamahari: 0,
         };
     }
 
@@ -68,6 +69,7 @@ export class ComponentToPrint extends React.Component {
             pengikut: sppdbyid.pengikut,
         })
         console.log(sppdbyid)
+        this.getLama()
         // setListPegawai(sppdbyid.pegawai[0])
         // setListSppd(sppdbyid.sppd[0])
         // setPenandatangan(sppdbyid.penandatangan[0])
@@ -77,8 +79,22 @@ export class ComponentToPrint extends React.Component {
         // setPengikut(sppdbyid.pengikut)
     }
 
+    async getLama() {
+        const { listSppd } = this.state
+        if (moment(listSppd.tanggal_pulang).diff(moment(listSppd.tanggal_berangkat), 'days') === 0) {
+            this.setState({
+                lamahari: 1,
+            })
+        } else {
+            this.setState({
+                lamahari: moment(listSppd.tanggal_pulang).diff(moment(listSppd.tanggal_berangkat), 'days')
+            })
+        }
+    }
+
+
     render() {
-        const { listPegawai, listSppd, penandatangan, kabkota, provinsi, instansi, pengikut } = this.state
+        const { listPegawai, listSppd, penandatangan, kabkota, provinsi, instansi, pengikut, lamahari } = this.state
         return (
             <table style={{ fontSize: 12, width: '100%', }}>
                 <table style={{ width: '100%', marginBottom: 10, fontSize: 12, }}>
@@ -170,7 +186,7 @@ export class ComponentToPrint extends React.Component {
                                     c. Tanggal harus kembali
                                 </td>
                             <td style={{ width: '57%', padding: 8, border: '1px solid black', borderWidth: 1, borderColor: 'black' }}>
-                                {moment(listSppd.tanggal_pulang).diff(moment(listSppd.tanggal_berangkat), 'days')} hari <br />
+                                {lamahari} hari <br />
                                 {moment(listSppd.tanggal_berangkat).format('LL')} <br />
                                 {moment(listSppd.tanggal_pulang).format('LL')}
                             </td>
@@ -198,8 +214,8 @@ export class ComponentToPrint extends React.Component {
                         <td style={{ width: '40%', padding: 20 }}>
                             Dikeluarkan di {instansi.kota}<br />
                                     Pada tanggal {moment(listSppd.tanggaldikeluarkan).format('LL')}<br />
-                            {() => {
-                                if (penandatangan === null || undefined) {
+                            {(() => {
+                                if (penandatangan ===   undefined || null || "") {
                                     return <></>
                                 } else {
                                     return (<>
@@ -213,7 +229,7 @@ export class ComponentToPrint extends React.Component {
                                     </>
                                     )
                                 }
-                            }}
+                            })()}
                         </td>
                     </tr>
                 </table>

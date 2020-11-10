@@ -73,7 +73,7 @@ function Dashboard() {
         >
 
             <Row style={{ width: "100%" }}>
-                <Col xs={12} sm={12} md={6} lg={6} xl={6} style={{ padding: 10 }}>
+                <Col xs={12} sm={12} md={8} lg={8} xl={8} style={{ padding: 10 }}>
                     <Card
                         style={{ width: '100%', borderWidth: 1 }}
                     >
@@ -88,7 +88,7 @@ function Dashboard() {
                         </Row>
                     </Card>
                 </Col>
-                <Col xs={12} sm={12} md={6} lg={6} xl={6} style={{ padding: 10 }}>
+                <Col xs={12} sm={12} md={8} lg={8} xl={8} style={{ padding: 10 }}>
                     <Card
                         style={{ width: '100%', borderWidth: 1 }}
                     >
@@ -103,7 +103,7 @@ function Dashboard() {
                         </Row>
                     </Card>
                 </Col>
-                <Col xs={12} sm={12} md={6} lg={6} xl={6} style={{ padding: 10 }}>
+                <Col xs={12} sm={12} md={8} lg={8} xl={8} style={{ padding: 10 }}>
                     <Card
                         style={{ width: '100%', borderWidth: 1 }}
                     >
@@ -118,7 +118,7 @@ function Dashboard() {
                         </Row>
                     </Card>
                 </Col>
-                <Col xs={12} sm={12} md={6} lg={6} xl={6} style={{ padding: 10 }}>
+                {/* <Col xs={12} sm={12} md={6} lg={6} xl={6} style={{ padding: 10 }}>
                     <Card
                         style={{ width: '100%', borderWidth: 1 }}
                     >
@@ -132,7 +132,7 @@ function Dashboard() {
                             </Col>
                         </Row>
                     </Card>
-                </Col>
+                </Col> */}
             </Row>
         </Content>
     )

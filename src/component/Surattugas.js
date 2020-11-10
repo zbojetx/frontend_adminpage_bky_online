@@ -867,13 +867,13 @@ function Sppd() {
                     <Select
                         showSearch
                         style={{ width: 200 }}
-                        placeholder="Select a person"
+                        placeholder="Pilih Penandatangan"
                         optionFilterProp="children"
                         style={{ width: '100%', borderWidth: 0 }}
                         onChange={onChangePenandatangan}
                         value={penanda_tangan}
                     >
-                        <Option value="">Pilih Penandatangan</Option>
+                        <Option value="">Kosongkan Penandatangan</Option>
                         {listPegawai.map((data, index) =>
                             <Option value={data.id}>{data.nip} - {data.nama_pegawai}</Option>
                         )}

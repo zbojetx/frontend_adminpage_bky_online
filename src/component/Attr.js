@@ -89,6 +89,7 @@ function Attr() {
     const [listJabatan, setListJabatan] = useState([])
     const [listFormat, setListFormat] = useState([])
     const [listSatuan, setListSatuan] = useState([])
+    const [listSeksi, setListSeksi] = useState([])
 
     useEffect(() => {
         attrBank()
@@ -98,6 +99,7 @@ function Attr() {
         attrPangkat()
         attrSatuan()
         attrFromat()
+        attrSeksi()
     }, [])
 
     const modelTrigger = () => {
@@ -189,6 +191,24 @@ function Attr() {
         setListFormat(data)
     }
 
+    const attrSeksi = async () => {
+        const url = 'getattrbyjenis'
+        const jenis = 'Seksi'
+        let attrformat = await getbyid(jenis, url)
+         const data = []
+        let data_length = attrformat.length
+
+        for (let i = 0; i < data_length; i++) {
+            data.push({
+                no: i + 1,
+                id: attrformat[i].id,
+                nama: attrformat[i].nama_attr,
+            })
+        }
+        setListFormat(data)
+    }
+
+
     const attrSatuan = async () => {
         const url = 'getattrbyjenis'
         const jenis = 'Satuan'
@@ -231,6 +251,7 @@ function Attr() {
             attrPangkat()
             attrFromat()
             attrSatuan()
+            attrSeksi()
             setJenisAttr('')
             setNamaAttr('')
             modelTrigger()
@@ -261,6 +282,7 @@ function Attr() {
             attrPangkat()
             attrFromat()
             attrSatuan()
+            attrSeksi()
         }
     }
 
@@ -384,7 +406,7 @@ function Attr() {
                     <Label>Data Pegawai</Label>
                 </InputBoxAbove>
                 <InputBoxCenter>
-                    <Label>Tingkat menurut peraturan perjalanan</Label>
+                    <Label>Jenis Attribut</Label>
                     <Select
                         showSearch
                         placeholder="Tingkat menurut peraturan perjalanan"
@@ -399,6 +421,7 @@ function Attr() {
                         <Option value="Jabatan">Jabatan</Option>
                         <Option value="Format">Format Penomoran Surat</Option>
                         <Option value="Satuan">Satuan</Option>
+                        <Option value="Seksi">Seksi / Bidang</Option>
                     </Select>
                 </InputBoxCenter>
                 <InputBoxBottom>

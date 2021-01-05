@@ -150,6 +150,18 @@ export async function delAdmin(id){
 
 //=================================================================================
 
-
+export async function uploadsinglefile(fd, URL){
+    let status = 0
+    await axios
+    .post(`${endpoint}/${URL}`,fd)
+    .then(res => {
+        if (res.data.kode === 1){
+            status = 1
+        }else{
+            status = 2
+        }
+    })
+    return status;
+}
 
 

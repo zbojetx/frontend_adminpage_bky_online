@@ -648,7 +648,7 @@ function Sppd() {
             key: 'action',
             render: (text, record) => (
                 <span>
-                    {record.nomor_surat_tugas}/{record.format_surat_tugas}
+                    {record.nomor_surat_tugas}{record.format_surat_tugas}
                 </span>
             ),
         },
@@ -657,7 +657,7 @@ function Sppd() {
             key: 'action',
             render: (text, record) => (
                 <span>
-                    {record.nomor_surat}/{record.format_surat}
+                    {record.nomor_surat}{record.format_surat}
                 </span>
             ),
         },

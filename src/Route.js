@@ -12,6 +12,15 @@ import Attr from './component/Attr';
 import Rincian from './component/Rincian';
 import Surattugas from './component/Surattugas';
 import Administrator from './component/Administrator';
+import Bidang from './component/Bidang';
+import InputPermohonan from './component/InputPermohonan';
+import InputFormulir from './component/InputFormulir';
+import Banner from './component/MobileBanner';
+import MobileArticle from './component/MobileArticle';
+import Qna from './component/Qna';
+import PetugasLoket from './component/PetugasLoket';
+import Sosmed from './component/Sosmed';
+import Saran from './component/Saran';
 
 function Routemain(){
     return(
@@ -28,6 +37,15 @@ function Routemain(){
                 <Route path='/administrator' component={Administrator} />
                 <Route path='/surattugas' component={Surattugas} />
                 <Route path='/rincian' component={Rincian} />
+                <Route path='/bidang' component={Bidang} />
+                <Route path='/inputpermohonan' component={InputPermohonan} />
+                <Route path='/inputformulir' component={InputFormulir} />
+                <Route path='/banner' component={Banner} />
+                <Route path='/article' component={MobileArticle} />
+                <Route path='/qna' component={Qna} />
+                <Route path='/petugasloket' component={PetugasLoket} />
+                <Route path='/sosmed' component={Sosmed} />
+                <Route path='/saran' component={Saran} />
             </Route>
         </Router>
     );

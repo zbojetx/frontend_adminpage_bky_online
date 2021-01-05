@@ -4,14 +4,12 @@ import { Layout, Menu, Divider, Typography, Button } from 'antd';
 import {
     MenuUnfoldOutlined,
     MenuFoldOutlined,
-    LaptopOutlined,
-    HomeOutlined,
+    MobileTwoTone,
     SkinOutlined,
-    ShoppingCartOutlined,
-    CarOutlined,
-    UsergroupAddOutlined,
-    CodeSandboxOutlined,
-    PrinterOutlined,
+    SmileTwoTone ,
+    SoundTwoTone ,
+    FolderOpenTwoTone ,
+    ProfileTwoTone,
     ShopTwoTone,
     AppstoreTwoTone,
     SnippetsTwoTone,
@@ -80,7 +78,7 @@ export default function Master(props) {
         return (
 
             <Layout style={{ height: '100%' }}>
-                <Sider trigger={null} collapsible collapsed={collapsed} style={{ backgroundColor: 'white' }}>
+                <Sider trigger={null} collapsible collapsed={collapsed} style={{ backgroundColor: 'white', overflow: 'auto' }}>
                     <div className="logo" style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center' }}>e-superdina</div>
                     {dataUsers.akses === 'admin' && (
                         <Menu mode="inline" defaultSelectedKeys={['1']}>
@@ -92,7 +90,11 @@ export default function Master(props) {
                                 <ShopTwoTone twoToneColor="#05c46b" />
                                 <span>Profil Instansi</span>
                             </Menu.Item>
-                            <Menu.Item key="4" onClick={() => browserHistory.push('/pegawai')}>
+                            <Menu.Item key="seksibidang" onClick={() => browserHistory.push('/bidang')}>
+                                <AppstoreTwoTone twoToneColor="#c23616" />
+                                <span>Seksi / Bidang</span>
+                            </Menu.Item>
+                            <Menu.Item key="pegawai" onClick={() => browserHistory.push('/pegawai')}>
                                 <CrownTwoTone twoToneColor="#546de5" />
                                 <span>Pegawai</span>
                             </Menu.Item>
@@ -110,6 +112,47 @@ export default function Master(props) {
                                     <span>SPPD</span>
                                 </Menu.Item>
                             </SubMenu>
+                            <SubMenu key="permohonan"
+                                title={
+                                    <span>
+                                        <FolderOpenTwoTone twoToneColor="#2c3e50" />
+                                        <span>Master Permohonan</span>
+                                    </span>
+                                }>
+                                <Menu.Item key="sub_permohonan" onClick={() => browserHistory.push('/inputpermohonan')}>
+                                    <span>Input Permohonan</span>
+                                </Menu.Item>
+                                <Menu.Item key="sub_formulir" onClick={() => browserHistory.push('/inputformulir')}>
+                                    <span>Formulir</span>
+                                </Menu.Item>
+                            </SubMenu>
+                            <SubMenu key="mobile_app"
+                                title={
+                                    <span>
+                                        <MobileTwoTone twoToneColor="#16a085" />
+                                        <span>Mobile Apps</span>
+                                    </span>
+                                }>
+                                <Menu.Item key="sub_banner" onClick={() => browserHistory.push('/banner')}>
+                                    <span>Banner</span>
+                                </Menu.Item>
+                                <Menu.Item key="sub_artikel" onClick={() => browserHistory.push('/article')}>
+                                    <span>Berita / Artikel</span>
+                                </Menu.Item>
+                                <Menu.Item key="sub_qna" onClick={() => browserHistory.push('/qna')}>
+                                    <span>Q & A</span>
+                                </Menu.Item>
+                                <Menu.Item key="sub_kritiksaran" onClick={() => browserHistory.push('/saran')}>
+                                    <span>Kritik & Saran</span>
+                                </Menu.Item>
+                                <Menu.Item key="sub_pengaduan" onClick={() => browserHistory.push('/article')}>
+                                    <span>Pengaduan</span>
+                                </Menu.Item>
+                                <Menu.Item key="sub_sosmed" onClick={() => browserHistory.push('/sosmed')}>
+                                    <span>Sosial Media</span>
+                                </Menu.Item>
+                            </SubMenu>
+                            
                             <SubMenu key="appd"
                                 title={
                                     <span>
@@ -117,7 +160,7 @@ export default function Master(props) {
                                         <span>Master Data</span>
                                     </span>
                                 }>
-                                <Menu.Item key="6" onClick={() => browserHistory.push('/attr')}>
+                                <Menu.Item key="9" onClick={() => browserHistory.push('/attr')}>
                                     <span>Data Pendukung</span>
                                 </Menu.Item>
                             </SubMenu>
@@ -125,7 +168,21 @@ export default function Master(props) {
                                 <Menu.Item> <HeartOutlined /> Puskesmas</Menu.Item>
                                 <Menu.Item> <UserAddOutlined /> Administrator</Menu.Item>
                             </SubMenu> */}
-                            <Menu.Item key="9" onClick={() => browserHistory.push('/administrator')} >
+                            <SubMenu key="user"
+                                title={
+                                    <span>
+                                        <SmileTwoTone twoToneColor="#2e86de" />
+                                        <span>User</span>
+                                    </span>
+                                }>
+                                <Menu.Item key="sub_petugas_loket" onClick={() => browserHistory.push('/petugasloket')}>
+                                    <span>Petugas Loket</span>
+                                </Menu.Item>
+                                <Menu.Item key="sub_pemohon" onClick={() => browserHistory.push('/attr')}>
+                                    <span>Pemohon</span>
+                                </Menu.Item>
+                            </SubMenu>
+                            <Menu.Item key="administrator" onClick={() => browserHistory.push('/administrator')} >
                                 <UserAddOutlined />
                                 <span>Administrator</span>
                             </Menu.Item>

@@ -70,7 +70,7 @@ function Kurir(props) {
     const getAnggaranById = async() => {
 
         console.log(total)
-        const url = 'getanggaranbyid'
+        const url = 'getrinciananggaranbyid'
         let rincian = await getbyid( props.location.state.id, url)
         console.log(rincian.length)
         for(let i = 0; i<rincian.length; i++){

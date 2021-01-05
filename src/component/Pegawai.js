@@ -90,6 +90,7 @@ function Pelayanan() {
     const [listPegawai, setListPegawai] = useState([])
     const [id, setId] = useState('')
     const [nip, setNip] = useState('')
+    const [nik, setNik] = useState('')
     const [nama_pegawai, setNamaPegawai] = useState('')
     const [email, setEmail] = useState('')
     const [no_hp, setNoHp] = useState('')
@@ -310,6 +311,7 @@ function Pelayanan() {
 
     const resetForm = () => {
         setNip('')
+        setNik()
         setNamaPegawai('')
         setEmail('')
         setNoHp('')
@@ -381,11 +383,12 @@ function Pelayanan() {
 
     return (
         <Content
-            className="site-layout-background"
+            // className="site-layout-background"
             style={{
                 margin: '24px 16px',
                 padding: 24,
-                minHeight: 280,
+                minHeight: '100%',
+                
             }}
         >
 
@@ -393,8 +396,8 @@ function Pelayanan() {
                 title="Pegawai"
                 //extra={<Button type="dashed" onClick={() => browserHistory.push('/addpegawai')}>Tambah Pegawai </Button>}
                 extra={<Button type="dashed" onClick={createnew}>Tambah Pegawai </Button>}
-                style={{ width: '100%', borderWidth: 0 }}
-                headStyle={{ color: 'white', backgroundColor: '#0984e3', fontWeight: 'bold', fontSize: 20 }}
+                style={{ width: '100%', borderWidth: 0, marginBottom: 20 }}
+                headStyle={{ color: 'white', backgroundColor: '#0984e3', fontWeight: 'bold', fontSize: 20,  }}
             />
 
             <Table columns={columns} dataSource={listPegawai} />
@@ -410,6 +413,10 @@ function Pelayanan() {
                 <InputBoxAbove style={{ backgroundColor: '#f7d794' }}>
                     <Label>Data Personal</Label>
                 </InputBoxAbove>
+                <InputBoxCenter>
+                    <Label>Nomor Induk Kependudukan (NIK)</Label>
+                    <Inputx placeholder="Nomor Induk Kependudukan" value={nik} onChange={e => setNik(e.target.value)} />
+                </InputBoxCenter>
                 <InputBoxCenter>
                     <Label>Nama Lengkap</Label>
                     <Inputx placeholder="Nama Lengkap" value={nama_pegawai} onChange={e => setNamaPegawai(e.target.value)} />

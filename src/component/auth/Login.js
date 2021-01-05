@@ -161,79 +161,131 @@ const App = () => {
     }
 
     return (
-        <Wrapper>
-            <Row style={{ height: '100%' }}>
-                <Col xs={24} sm={24} md={24} lg={6} xl={6} style={{ padding: 20, margin: 'auto', height: '100%' }}>
-                    <Row style={{ justifyContent: 'center', marginTop: 130}}>
-                        <Col style={{ padding: 10,  justifyContent: 'center' }}>
-                            <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Logo_BPN-KemenATR_%282017%29.png/779px-Logo_BPN-KemenATR_%282017%29.png' style={{ width: 90 }} />
-                        </Col>
-                    </Row>
-                    <Row style={{ justifyContent: 'center', fontSize: 25 }}>
-                        <Col style={{ padding: 10 }}>
-                            <Title>e-superdina</Title>
-                        </Col>
-                    </Row>
-                    {/* <Row style={{ justifyContent: 'center', alignItems: 'center'}}>
-                        <Col>
-                            <Title>Badan Pertanahan Nasional Kabupaten Bengkayang </Title>
+        // <Wrapper>
+        //     <Row style={{ height: '100%' }}>
+        //         <Col xs={24} sm={24} md={24} lg={6} xl={6} style={{ padding: 20, margin: 'auto', height: '100%' }}>
+        //             <Row style={{ justifyContent: 'center', marginTop: 130}}>
+        //                 <Col style={{ padding: 10,  justifyContent: 'center' }}>
+        //                     <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Logo_BPN-KemenATR_%282017%29.png/779px-Logo_BPN-KemenATR_%282017%29.png' style={{ width: 90 }} />
+        //                 </Col>
+        //             </Row>
+        //             <Row style={{ justifyContent: 'center', fontSize: 25 }}>
+        //                 <Col style={{ padding: 10 }}>
+        //                     <Title>e-superdina</Title>
+        //                 </Col>
+        //             </Row>
+        //             {/* <Row style={{ justifyContent: 'center', alignItems: 'center'}}>
+        //                 <Col>
+        //                     <Title>Badan Pertanahan Nasional Kabupaten Bengkayang </Title>
 
-                        </Col>
-                    </Row>
-                    <Row style={{ marginTop: 50 }}>
-                        <Col style={{ padding: 10 }}>
-                            <SubTitle>Login </SubTitle>
-                        </Col>
-                    </Row> */}
-                    {messagebox ?
-                        (
-                            <Row style={{ backgroundColor: '#00a8ff', border: '0.5px solid #0097e6', borderRadius: 10, padding: 5, color: 'white' }}>
-                                <Col style={{ padding: 10 }}>
-                                    <Label> {message} </Label>
-                                </Col>
-                            </Row>
-                        ) : (
-                            <></>
-                        )}
-                    {signup ?
-                        (
-                            <>
-                                <InputBoxAbove>
-                                    <Label>Nama Instansi</Label>
-                                    <Input placeholder="Nama Instansi" onChange={e => setNamaInstansi(e.target.value)} />
-                                </InputBoxAbove>
-                                <InputBoxCenter>
-                                    <Label>Email</Label>
-                                    <Input placeholder="Masukan username anda disini" onChange={e => setEmail(e.target.value)} />
-                                </InputBoxCenter>
-                                <InputBoxBottom>
-                                    <Label>Username</Label>
-                                    <Input placeholder="dispmnaker" onChange={e => setUsername(e.target.value)} />
-                                </InputBoxBottom>
-                                {/* <Button onClick={registerFunc} >Register </Button> */}
-                                <Linkto onClick={toggleSignUp}>Login</Linkto>
-                            </>
-                        ) : (
-                            <>
-                                <InputBoxAbove>
-                                    <Label>Username</Label>
-                                    <Input placeholder="Masukan username anda disini" onChange={e => setUsername(e.target.value)} />
-                                </InputBoxAbove>
-                                <InputBoxBottom>
-                                    <Label>Password</Label>
-                                    <Input type="password" placeholder="**********" onChange={e => setPassword(e.target.value)} />
-                                </InputBoxBottom>
-                                <Button onClick={loginFunc} >Masuk </Button>
-                                {/* <Linkto onClick={toggleSignUp}>Registrasi</Linkto> */}
-                            </>
-                        )
-                    }
-                </Col >
-                <Col xs={24} sm={24} md={24} lg={18} xl={18} style={{ backgroundColor: '#dff9fb' }}>
-                    <img src={require('./../../assets/img/preview.jpg')} style={{ width: '100%', position: 'absolute' }} />
-                </Col>
-            </Row >
-        </Wrapper >
+        //                 </Col>
+        //             </Row>
+        //             <Row style={{ marginTop: 50 }}>
+        //                 <Col style={{ padding: 10 }}>
+        //                     <SubTitle>Login </SubTitle>
+        //                 </Col>
+        //             </Row> */}
+        //             {messagebox ?
+        //                 (
+        //                     <Row style={{ backgroundColor: '#00a8ff', border: '0.5px solid #0097e6', borderRadius: 10, padding: 5, color: 'white' }}>
+        //                         <Col style={{ padding: 10 }}>
+        //                             <Label> {message} </Label>
+        //                         </Col>
+        //                     </Row>
+        //                 ) : (
+        //                     <></>
+        //                 )}
+        //             {signup ?
+        //                 (
+        //                     <>
+        //                         <InputBoxAbove>
+        //                             <Label>Nama Instansi</Label>
+        //                             <Input placeholder="Nama Instansi" onChange={e => setNamaInstansi(e.target.value)} />
+        //                         </InputBoxAbove>
+        //                         <InputBoxCenter>
+        //                             <Label>Email</Label>
+        //                             <Input placeholder="Masukan username anda disini" onChange={e => setEmail(e.target.value)} />
+        //                         </InputBoxCenter>
+        //                         <InputBoxBottom>
+        //                             <Label>Username</Label>
+        //                             <Input placeholder="dispmnaker" onChange={e => setUsername(e.target.value)} />
+        //                         </InputBoxBottom>
+        //                         {/* <Button onClick={registerFunc} >Register </Button> */}
+        //                         <Linkto onClick={toggleSignUp}>Login</Linkto>
+        //                     </>
+        //                 ) : (
+        //                     <>
+        //                         <InputBoxAbove>
+        //                             <Label>Username</Label>
+        //                             <Input placeholder="Masukan username anda disini" onChange={e => setUsername(e.target.value)} />
+        //                         </InputBoxAbove>
+        //                         <InputBoxBottom>
+        //                             <Label>Password</Label>
+        //                             <Input type="password" placeholder="**********" onChange={e => setPassword(e.target.value)} />
+        //                         </InputBoxBottom>
+        //                         <Button onClick={loginFunc} >Masuk </Button>
+        //                         {/* <Linkto onClick={toggleSignUp}>Registrasi</Linkto> */}
+        //                     </>
+        //                 )
+        //             }
+        //         </Col >
+        //         <Col xs={24} sm={24} md={24} lg={18} xl={18} style={{ backgroundColor: '#dff9fb' }}>
+        //             <img src={require('./../../assets/img/preview.jpg')} style={{ width: '100%', position: 'absolute' }} />
+        //         </Col>
+        //     </Row >
+        // </Wrapper >
+        <div className="form-body">
+            <div className="website-logo">
+                <a href="#">
+                    <div className="logo">
+                        <img className="logo-size" src={require('./../../assets/images/sambas.png')} alt="" />
+                    </div>
+                </a>
+            </div>
+            <div className="row">
+                <div className="img-holder">
+                    <div className="bg"></div>
+                    <div className="info-holder">
+                        <img src={require('./../../assets/images/graphic2.svg')} alt="" />
+                    </div>
+                </div>
+                <div className="form-holder">
+                    <div className="form-content">
+                        <div className="form-items">
+                            <h3>e-Superdina</h3>
+                            <p>Elctronic Surat Perjalanan Dinas</p>
+                            {/* <div className="page-links">
+                                <a href="#" onClick={() => setSignUp(false)} className="active">Login</a><a href="#" onClick={() => setSignUp(true)}>Register</a>
+                            </div> */}
+                            {signup ? (
+                                <>
+                                    {/* <form>
+                                        <input class="form-control" type="text" name="name" placeholder="Nama BLUD" onChange={e => setNamaBlud(e.target.value)} required />
+                                        <input class="form-control" type="email" name="email" placeholder="E-mail Address" onChange={e => setEmail(e.target.value)} required />
+                                        <input class="form-control" type="text" name="username" placeholder="Username" onChange={e => setUsername(e.target.value)} required />
+                                    </form>
+                                    <div class="form-button">
+                                        <button class="ibtn" onClick={registerFunc} >Register</button>
+                                    </div> */}
+                                </>
+                            )
+                                : (
+                                    <>
+                                        <form>
+                                            <input className="form-control" type="text" name="username" placeholder="Username" onChange={e => setUsername(e.target.value)} required />
+                                            <input className="form-control" type="password" name="password" placeholder="Password" onChange={e => setPassword(e.target.value)} required />
+                                        </form>
+                                        <div className="form-button">
+                                            <button id="submit" type="submit" className="ibtn" onClick={loginFunc}>Login</button>
+                                        </div>
+                                    </>
+                                )}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     );
 
 }

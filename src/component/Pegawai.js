@@ -84,6 +84,17 @@ const Inputx = styled.input`
     }
 `;
 
+const loket = [
+    {
+        id: 1,
+        name: "Petugas Loket"
+    },
+    {
+        id: 0,
+        name: "Bukan Petugas Loket"
+    }
+]
+
 function Pelayanan() {
 
     const [modal, setModal] = useState(false)
@@ -98,6 +109,7 @@ function Pelayanan() {
     const [jabatan, setJabatan] = useState('')
     const [eselon, setEselon] = useState('')
     const [id_bidang, setIdBidang] = useState('')
+    const [petugas_loket, setPeugasLoket] = useState(0)
     const [bank, setBank] = useState('')
     const [nomor_rekening, setNomorRekening] = useState('')
     const [jabatan_plt, setJabatanPlt] = useState('')
@@ -137,6 +149,7 @@ function Pelayanan() {
         setPangkatGol(pegawaibyid[0].pangkat_gol)
         setJabatan(pegawaibyid[0].jabatan)
         setIdBidang(pegawaibyid[0].id_bidang)
+        setPeugasLoket(pegawaibyid[0].petugas_loket)
         setEselon(pegawaibyid[0].eselon)
         setBank(pegawaibyid[0].bank)
         setNomorRekening(pegawaibyid[0].nomor_rekening)
@@ -232,6 +245,7 @@ function Pelayanan() {
                 pangkat_gol,
                 jabatan,
                 eselon,
+                petugas_loket,
                 id_bidang,
                 bank,
                 nomor_rekening,
@@ -281,6 +295,7 @@ function Pelayanan() {
                 pangkat_gol,
                 jabatan,
                 eselon,
+                petugas_loket,
                 id_bidang,
                 bank,
                 nomor_rekening,
@@ -397,6 +412,11 @@ function Pelayanan() {
     
     const onChangeBidang= value => {
         setIdBidang(value)
+    }
+
+    const onChangePetugasLoket= value => {
+        console.log(value)
+        setPeugasLoket(value)
     }
 
 
@@ -516,6 +536,22 @@ function Pelayanan() {
                     >
                         {listBidang.map((data, index) =>
                             <Option value={data.id_bidang}>{data.nama_bidang}</Option>
+                        )}
+                    </Select>
+                </InputBoxCenter>
+                <InputBoxCenter>
+                    <Label>Petugas Loket</Label>
+                    <Select
+                        showSearch
+                        style={{ width: 200 }}
+                        placeholder="Pilih Jabatan"
+                        optionFilterProp="children"
+                        style={{ width: '100%', borderWidth: 0 }}
+                        onChange={onChangePetugasLoket}
+                        value={petugas_loket}
+                    >
+                        {loket.map((data, index) => 
+                             <Option value={data.id}>{data.name}</Option>
                         )}
                     </Select>
                 </InputBoxCenter>

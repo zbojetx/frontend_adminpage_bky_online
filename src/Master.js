@@ -168,20 +168,10 @@ export default function Master(props) {
                                 <Menu.Item> <HeartOutlined /> Puskesmas</Menu.Item>
                                 <Menu.Item> <UserAddOutlined /> Administrator</Menu.Item>
                             </SubMenu> */}
-                            <SubMenu key="user"
-                                title={
-                                    <span>
-                                        <SmileTwoTone twoToneColor="#2e86de" />
-                                        <span>User</span>
-                                    </span>
-                                }>
-                                <Menu.Item key="sub_petugas_loket" onClick={() => browserHistory.push('/petugasloket')}>
-                                    <span>Petugas Loket</span>
-                                </Menu.Item>
-                                <Menu.Item key="sub_pemohon" onClick={() => browserHistory.push('/pemohon')}>
-                                    <span>Pemohon</span>
-                                </Menu.Item>
-                            </SubMenu>
+                            <Menu.Item key="user" onClick={() => browserHistory.push('/pemohon')} >
+                                <SmileTwoTone twoToneColor="#2e86de" />
+                                <span>User / Pemohon</span>
+                            </Menu.Item>
                             <Menu.Item key="administrator" onClick={() => browserHistory.push('/administrator')} >
                                 <UserAddOutlined />
                                 <span>Administrator</span>

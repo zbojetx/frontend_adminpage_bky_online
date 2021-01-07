@@ -21,6 +21,7 @@ import Qna from './component/Qna';
 import PetugasLoket from './component/PetugasLoket';
 import Sosmed from './component/Sosmed';
 import Saran from './component/Saran';
+import Pemohon from './component/Pemohon';
 
 function Routemain(){
     return(
@@ -46,6 +47,7 @@ function Routemain(){
                 <Route path='/petugasloket' component={PetugasLoket} />
                 <Route path='/sosmed' component={Sosmed} />
                 <Route path='/saran' component={Saran} />
+                <Route path='/pemohon' component={Pemohon} />
             </Route>
         </Router>
     );

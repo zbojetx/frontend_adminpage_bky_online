@@ -178,7 +178,7 @@ export default function Master(props) {
                                 <Menu.Item key="sub_petugas_loket" onClick={() => browserHistory.push('/petugasloket')}>
                                     <span>Petugas Loket</span>
                                 </Menu.Item>
-                                <Menu.Item key="sub_pemohon" onClick={() => browserHistory.push('/attr')}>
+                                <Menu.Item key="sub_pemohon" onClick={() => browserHistory.push('/pemohon')}>
                                     <span>Pemohon</span>
                                 </Menu.Item>
                             </SubMenu>

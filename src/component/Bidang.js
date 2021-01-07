@@ -129,7 +129,7 @@ function Bidang() {
         for (let i = 0; i < data_length; i++) {
             data.push({
                 no: i + 1,
-                id: bidang[i].id,
+                id_bidang: bidang[i].id_bidang,
                 nama_bidang: bidang[i].nama_bidang,
                 username: bidang[i].username,
             })
@@ -270,10 +270,10 @@ function Bidang() {
             key: 'action',
             render: (text, record) => (
                 <span>
-                    <Button key="edit" onClick={() => getBidangById(record.id)} style={{ marginLeft: 10 }} type="primary" icon={<InfoCircleOutlined />} >Edit</Button>
+                    <Button key="edit" onClick={() => getBidangById(record.id_bidang)} style={{ marginLeft: 10 }} type="primary" icon={<InfoCircleOutlined />} >Edit</Button>
                     <Popconfirm
                         title="Anda yakin menghapus Data ini?"
-                        onConfirm={() => removebidang(record.id)}
+                        onConfirm={() => removebidang(record.id_bidang)}
                         // onCancel={cancel}
                         okText="Yes"
                         cancelText="No"

@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 
-//const endpoint = 'http://api-prod.e-superdina.com'
+//const endpoint = 'http://api-bky.dinartech.com'
 const endpoint = 'http://localhost:6789'
 
 

@@ -97,6 +97,7 @@ function Pelayanan() {
     const [pangkat_gol, setPangkatGol] = useState('')
     const [jabatan, setJabatan] = useState('')
     const [eselon, setEselon] = useState('')
+    const [id_bidang, setIdBidang] = useState('')
     const [bank, setBank] = useState('')
     const [nomor_rekening, setNomorRekening] = useState('')
     const [jabatan_plt, setJabatanPlt] = useState('')
@@ -106,6 +107,7 @@ function Pelayanan() {
     const [listEselon, setListEselon] = useState([])
     const [listPangkat, setListPangkat] = useState([])
     const [listJabatan, setListJabatan] = useState([])
+    const [listBidang, setListBidang] = useState([])
 
 
     useEffect(() => {
@@ -114,6 +116,7 @@ function Pelayanan() {
         attrEselon()
         attrJabatan()
         attrPangkat()
+        getbidang()
     }, []);
 
 
@@ -133,12 +136,20 @@ function Pelayanan() {
         setNoHp(pegawaibyid[0].no_hp)
         setPangkatGol(pegawaibyid[0].pangkat_gol)
         setJabatan(pegawaibyid[0].jabatan)
+        setIdBidang(pegawaibyid[0].id_bidang)
         setEselon(pegawaibyid[0].eselon)
         setBank(pegawaibyid[0].bank)
         setNomorRekening(pegawaibyid[0].nomor_rekening)
         setJabatanPlt(pegawaibyid[0].jabatan_plt)
         setIsUpdate(true)
         modelTrigger()
+    }
+
+    const getbidang= async () => {
+        const url = 'getbidang'
+        let bidang = await getall(url)
+        console.log(bidang)
+        setListBidang(bidang)
     }
 
     const attrBank = async () => {
@@ -221,6 +232,7 @@ function Pelayanan() {
                 pangkat_gol,
                 jabatan,
                 eselon,
+                id_bidang,
                 bank,
                 nomor_rekening,
                 jabatan_plt,
@@ -269,6 +281,7 @@ function Pelayanan() {
                 pangkat_gol,
                 jabatan,
                 eselon,
+                id_bidang,
                 bank,
                 nomor_rekening,
                 jabatan_plt,
@@ -321,6 +334,7 @@ function Pelayanan() {
         setBank('')
         setNomorRekening('')
         setJabatanPlt('')
+        setIdBidang('')
     }
 
     const columns = [
@@ -378,6 +392,11 @@ function Pelayanan() {
 
     const onChangeEselon= value => {
         setEselon(value)
+    }
+
+    
+    const onChangeBidang= value => {
+        setIdBidang(value)
     }
 
 
@@ -481,6 +500,22 @@ function Pelayanan() {
                     >
                         {listEselon.map((data, index) =>
                             <Option value={data.nama_attr}>{data.nama_attr}</Option>
+                        )}
+                    </Select>
+                </InputBoxCenter>
+                <InputBoxCenter>
+                    <Label>Seksi / Bidang</Label>
+                    <Select
+                        showSearch
+                        style={{ width: 200 }}
+                        placeholder="Pilih Jabatan"
+                        optionFilterProp="children"
+                        style={{ width: '100%', borderWidth: 0 }}
+                        onChange={onChangeBidang}
+                        value={id_bidang}
+                    >
+                        {listBidang.map((data, index) =>
+                            <Option value={data.id_bidang}>{data.nama_bidang}</Option>
                         )}
                     </Select>
                 </InputBoxCenter>

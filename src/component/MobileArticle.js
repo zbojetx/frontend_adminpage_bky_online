@@ -102,6 +102,10 @@ function MobileArticle() {
     const [artikel, setArtikel] = useState('')
     const [selectedfile, setSelectedFiles] = useState([])
     const [filetoupload, setFileToUpload] = useState([])
+    const [isUpdate, setIsUpdate] = useState(false) 
+    const [host, setHost] = useState('')
+    const [id_artikel, setIdArtikel] = useState('')
+    const [img, setImg] = useState('')
 
     const [artikelist, setArtikelList] = useState([])
     const [artikelpath, setArtikelPath] = useState('')
@@ -112,7 +116,14 @@ function MobileArticle() {
     },[])
 
     const modalTrigger = () => {
+        setIsUpdate(!isUpdate)
         setModal(!modal)
+    }
+
+    const modalCreate = () => {
+        resetform()
+        setIsUpdate(false)
+        modalTrigger()
     }
 
     const upload = async () => {
@@ -139,6 +150,70 @@ function MobileArticle() {
                     '',
                 icon: <CloseCircleOutlined style={{ color: '#e84118' }} />,
             });
+        }
+    }
+
+    const getartikelbyid = async(id) => {
+        setIsUpdate(true)
+        const url = 'getartikelbyid'
+        let artikelbyid = await getbyid(id, url)
+        setIdArtikel(id)
+        setJudul(artikelbyid.artikel[0].judul)
+        setArtikel(artikelbyid.artikel[0].artikel)
+        setHost(artikelbyid.host)
+        setImg(artikelbyid.artikel[0].image)
+        modalTrigger()
+    }
+
+    const update = async() => {
+        if (id_artikel === '' || judul === '') {
+            notification.open({
+                message: 'Gagal Menyimnpan',
+                description:
+                    'Form tidak boleh kosong',
+                icon: <CloseCircleOutlined style={{ color: '#e84118' }} />,
+            });
+        } else {
+            let datas = {
+                id_artikel,
+                judul,
+                artikel,
+            }
+            const apiurl = 'updateartikel';
+            console.log(apiurl)
+            let updateartikel = await createupdate(datas, apiurl)
+            if (updateartikel === 1) {
+                notification.open({
+                    message: 'Data Berhasil update',
+                    description:
+                        '',
+                    icon: <CheckCircleOutlined style={{ color: '#00b894' }} />,
+                });
+                getartikelall()
+                modalTrigger()
+                resetform()
+            } else {
+                notification.open({
+                    message: 'Gagal Menyimpan Data',
+                    description:
+                        '',
+                    icon: <CloseCircleOutlined style={{ color: '#e84118' }} />,
+                });
+            }
+        }
+    }
+
+    const deleteartikel = async(id) => {
+        const url = 'deleteartikel'
+        const hapus = await remove(id, url)
+        if (hapus === 1) {
+            notification.open({
+                message: 'Data Berhasil dihapus',
+                description:
+                    '',
+                icon: <CheckCircleOutlined style={{ color: '#00b894' }} />,
+            });
+            getartikelall()
         }
     }
 
@@ -170,8 +245,9 @@ function MobileArticle() {
         console.log(event.target.files)
     };
 
-    const resetform = () => {
+    const resetform = async() => {
         setJudul('')
+        setArtikel('')
         setFileToUpload('')
         setSelectedFiles([])
     }
@@ -210,10 +286,10 @@ function MobileArticle() {
             key: 'action',
             render: (text, record) => (
                 <span>
-                    <Button type="primary" > Edit </Button>
+                    <Button type="primary" onClick={() => getartikelbyid(record.id_artikel)}> Edit </Button>
                     <Popconfirm
                         title="Anda yakin menghapus Data ini?"
-                        //onConfirm={() => hapus(record.id_banner)}
+                        onConfirm={() => deleteartikel(record.id_artikel)}
                         // onCancel={cancel}
                         okText="Yes"
                         cancelText="No"
@@ -238,7 +314,7 @@ function MobileArticle() {
             <Card
                 title="Berita / Artikel"
                 //extra={<Button type="dashed" onClick={() => browserHistory.push('/addpegawai')}>Tambah Pegawai </Button>}
-                extra={<Button type="dashed" onClick={modalTrigger}>Tambah Berita / Artikel</Button>}
+                extra={<Button type="dashed" onClick={modalCreate}>Tambah Berita / Artikel</Button>}
                 style={{ width: '100%', marginBottom: 20 }}
                 headStyle={{ color: 'white', backgroundColor: '#0984e3', fontWeight: 'bold', fontSize: 20 }}
             />
@@ -249,9 +325,10 @@ function MobileArticle() {
                 title="Tambah Berita / Artikel"
                 centered
                 visible={modal}
-                onOk={upload}
+                //onOk={upload}
                 onCancel={modalTrigger}
                 width={1000}
+                footer={null}
             >
                 <InputBoxAbove>
                     <Label>Judul</Label>
@@ -269,9 +346,16 @@ function MobileArticle() {
                         placeholder="Syarat Permohonan"
                     />
                 </InputBoxCenter>
+                {isUpdate ?
+                 <img src={host+'/'+img} style={{ width: '100%' }}  /> 
+                 :
+                     <InputBoxBottom>
+                     <Label>Cover Image</Label>
+                     <Inputx type="file" onChange={selectFile} />
+                 </InputBoxBottom>
+                }
                 <InputBoxBottom>
-                    <Label>Cover Image</Label>
-                    <Inputx type="file" onChange={selectFile} />
+                    <Button type="primary"  onClick={isUpdate ? update : upload } block> {isUpdate ? "Update" : "Buat Berita"} </Button>
                 </InputBoxBottom>
             </Modal>
         </Content>

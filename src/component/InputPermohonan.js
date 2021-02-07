@@ -218,6 +218,20 @@ function InputJenisPermohonan() {
         }
     }
 
+    const delete_jenis_permohonan = async(id) => {
+        const url = 'deletejenispermohonan'
+        const hapus = await remove(id, url)
+        if (hapus === 1) {
+            notification.open({
+                message: 'Data Berhasil dihapus',
+                description:
+                    '',
+                icon: <CheckCircleOutlined style={{ color: '#00b894' }} />,
+            });
+            getjenispermohonan()
+        }
+    }
+
     const createjenispermohonanjoinformulir = async () => {
         let datas = {
             id_jenis_permohonan,
@@ -296,7 +310,7 @@ function InputJenisPermohonan() {
                     <Button key="edit" style={{ marginLeft: 10 }} onClick = {() => getFormulirPermohonanById(record.id)} type="primary" icon={<InfoCircleOutlined />} >Edit</Button>
                     <Popconfirm
                         title="Anda yakin menghapus Data ini?"
-                        //onConfirm={() => removepagawai(record.id)}
+                        onConfirm={() => delete_jenis_permohonan(record.id)}
                         // onCancel={cancel}
                         okText="Yes"
                         cancelText="No"

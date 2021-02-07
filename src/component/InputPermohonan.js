@@ -99,6 +99,7 @@ function InputJenisPermohonan() {
     const [sop, setSop] = useState('')
     const [id_jenis_permohonan, setIdJenisPermohonan] = useState('')
     const [id_formulir, setIdFormulir] = useState('') 
+    const [isUpdate, setIsUpdate] = useState(false)
 
     const [listjenispermohonan, setListJenisPermohonan] = useState([])
     const [listformulir, setFormulirList] = useState([])
@@ -115,6 +116,12 @@ function InputJenisPermohonan() {
 
     const modalFormulirTrigger = () => {
         setModalFormulir(!modalFormulir)
+    }
+
+    const modalCreate = () => {
+        resetForm()
+        setIsUpdate(false)
+        modalTrigger()
     }
 
     const getjenispermohonan = async () => {
@@ -158,6 +165,9 @@ function InputJenisPermohonan() {
                     '',
                 icon: <CheckCircleOutlined style={{ color: '#00b894' }} />,
             });
+            getjenispermohonan()
+            resetForm()
+            modalTrigger()
         } else {
             notification.open({
                 message: 'Gagal Menyimpan Data',
@@ -165,6 +175,46 @@ function InputJenisPermohonan() {
                     '',
                 icon: <CloseCircleOutlined style={{ color: '#e84118' }} />,
             });
+        }
+    }
+
+    const update = async () => {
+        if (id_jenis_permohonan === '' || nama_permohonan === '') {
+            notification.open({
+                message: 'Gagal Menyimnpan',
+                description:
+                    'Form tidak boleh kosong',
+                icon: <CloseCircleOutlined style={{ color: '#e84118' }} />,
+            });
+        } else {
+            let datas = {
+                id_jenis_permohonan,
+                nama_permohonan,
+                syarat_permohonan,
+                sop,
+            }
+            console.log(isUpdate)
+            const apiurl = 'updatejenispermohonan';
+            console.log(apiurl)
+            let updatejenispermohonan = await createupdate(datas, apiurl)
+            if (updatejenispermohonan === 1) {
+                notification.open({
+                    message: 'Data Berhasil update',
+                    description:
+                        '',
+                    icon: <CheckCircleOutlined style={{ color: '#00b894' }} />,
+                });
+                getjenispermohonan()
+                modalTrigger()
+                resetForm()
+            } else {
+                notification.open({
+                    message: 'Gagal Menyimpan Data',
+                    description:
+                        '',
+                    icon: <CloseCircleOutlined style={{ color: '#e84118' }} />,
+                });
+            }
         }
     }
 
@@ -192,9 +242,30 @@ function InputJenisPermohonan() {
         }
     }
 
+
     const getFormlirByPermohonan = async (id_permohonan) => {
+        
         setIdJenisPermohonan(id_permohonan)
         modalFormulirTrigger()
+    }
+
+    const getFormulirPermohonanById = async(id) => {
+        setIsUpdate(true)
+        const url = 'getjenispermohonanbyid'
+        let jenispermohonanbyid = await getbyid(id, url)
+        console.log(jenispermohonanbyid)
+        setIdJenisPermohonan(id)
+        setNamaPermohonan(jenispermohonanbyid[0].nama_permohonan)
+        setSyaratPermohonan(jenispermohonanbyid[0].syarat_permohonan)
+        setSop(jenispermohonanbyid[0].sop)
+        modalTrigger()
+    }
+
+    const resetForm = async() => {
+        setIdJenisPermohonan('')
+        setNamaPermohonan('')
+        setSyaratPermohonan('')
+        setSop('')
     }
 
     const columns = [
@@ -222,16 +293,16 @@ function InputJenisPermohonan() {
             key: 'action',
             render: (text, record) => (
                 <span>
-                    {/* <Button key="edit" onClick={() => getPegawaiById(record.id)} style={{ marginLeft: 10 }} type="primary" icon={<InfoCircleOutlined />} >Edit</Button> */}
-                    {/* <Popconfirm
+                    <Button key="edit" style={{ marginLeft: 10 }} onClick = {() => getFormulirPermohonanById(record.id)} type="primary" icon={<InfoCircleOutlined />} >Edit</Button>
+                    <Popconfirm
                         title="Anda yakin menghapus Data ini?"
-                        onConfirm={() => removepagawai(record.id)}
+                        //onConfirm={() => removepagawai(record.id)}
                         // onCancel={cancel}
                         okText="Yes"
                         cancelText="No"
                     >
                         <Button key="hapus" style={{ marginLeft: 10 }} type="danger" icon={<DeleteOutlined />} >Hapus</Button>
-                    </Popconfirm> */}
+                    </Popconfirm>
                 </span>
             ),
         },
@@ -258,7 +329,7 @@ function InputJenisPermohonan() {
             <Card
                 title="Permohonan"
                 //extra={<Button type="dashed" onClick={() => browserHistory.push('/addpegawai')}>Tambah Pegawai </Button>}
-                extra={<Button type="dashed" onClick={modalTrigger}>Tambah Jenis Permohonan </Button>}
+                extra={<Button type="dashed" onClick={modalCreate}>Tambah Jenis Permohonan </Button>}
                 style={{ width: '100%', marginBottom: 20 }}
                 headStyle={{ color: 'white', backgroundColor: '#0984e3', fontWeight: 'bold', fontSize: 20 }}
             />
@@ -269,9 +340,10 @@ function InputJenisPermohonan() {
                 title="Tambah Jenis Permohonan"
                 centered
                 visible={modal}
-                onOk={create}
+                onOk={update}
                 onCancel={modalTrigger}
                 width={1000}
+                footer={null}
             >
                 <InputBoxAbove>
                     <Label>Nama Permohonan</Label>
@@ -292,6 +364,9 @@ function InputJenisPermohonan() {
                 <InputBoxBottom>
                     <Label>SOP</Label>
                     <Inputx placeholder="cth. 2 hari" value={sop} onChange={e => setSop(e.target.value)} />
+                </InputBoxBottom>
+                <InputBoxBottom>
+                    <Button type='primary' onClick={isUpdate ? update : create} block> {isUpdate ? "Update" : "Simpan"} </Button>
                 </InputBoxBottom>
             </Modal>
 
